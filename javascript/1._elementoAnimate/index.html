@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS elemento animate</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      border: 1px solid red;
+      width: 600px;
+    }
+    .cuadrado {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      border-radius: 25px;
+    }
+    button {
+      text-align: center;
+      background-color: #7dc800;
+      padding: 0.6em 0.8em 0.8em;
+      border: none;
+      color: white;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: inset 0 -0.2em rgba(0, 0, 0, 0.2);
+      outline: 0;
+      transition: 0.2s;
+      will-change: transform;
+    }
+    button:active {
+      transform: scale(0.9);
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="cuadrado" id="cuadrado"></div>
+      <div class="buttons">
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="stop">Stop</button>
+        <button id="reversa">Reverse</button>
+      </div>
+    </div>
+    <script>
+      const $cuadrado = document.getElementById("cuadrado");
+      // element.animate(keyframes = [], option = {})
+      const animation = $cuadrado.animate(
+        [
+          // from
+          {
+            transform: "translateX(0)",
+          },
+          // to
+          {
+            transform: "translateX(500px)", // 250
+          },
+        ],
+        {
+          duration: 1000,
+          delay: 1000,
+          direction: "normal",
+          easing: "linear",
+          iterations: 3,
+          fill: "forwards",
+          iterationStart: 0.5, // = 50%
+          // endDelay: 5000,
+        }
+      );
+      const $playbtn = document.getElementById("play");
+      const $pausebtn = document.getElementById("pause");
+      const $stopbtn = document.getElementById("stop");
+      const $reversebtn = document.getElementById("reversa");
+      //Eventos de click
+      $playbtn.addEventListener("click", (event) => {
+        animation.play();
+      });
+      $pausebtn.addEventListener("click", (event) => {
+        animation.pause();
+      });
+      $stopbtn.addEventListener("click", (event) => {
+        animation.finish();
+      });
+      $reversebtn.addEventListener("click", (event) => {
+        animation.reverse();
+      });
+    </script>
+  </body>
+</html>
