@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Twitter Like</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        height: 100vh;
+      }
+      /*La imagen tipo sprite tiene 29 frames por lo cual al mover la imagen con position esta muestra todos sus frames, se colocaron 28 paso aunque la imagen tiene 29 para que quede con un background rojo imitando el like, ademas de esto el tamaño de .like es de 50px esto para hacerlo responsive se divide dentro de 2 para hacer que se vea bien en todas las pantallas */
+      .like {
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        background-image: url("assets/heart.png");
+        background-size: 1450px 50px;
+        /* transform: scale(0.5); */
+      }
+      .like.is-like {
+        animation-name: like;
+        animation-duration: 1s;
+        animation-timing-function: steps(28);
+        /*Para que se quede en una posicion inicial*/
+        /* background-position: right; */
+        animation-fill-mode: forwards;
+      }
+      @keyframes like {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          /* background-position: -2900px 0; */
+          background-position: right;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tweet-box">
+      <div class="like" id="like"></div>
+    </div>
+    <script>
+      const $likeImg = document.getElementById("like");
+      $likeImg.addEventListener("click", (event) => {
+        console.log(event);
+        //Para que agregue y quite el evento click
+        $likeImg.classList.toggle("is-like");
+      });
+    </script>
+  </body>
+</html>
