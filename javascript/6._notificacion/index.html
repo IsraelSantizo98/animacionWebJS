@@ -38,9 +38,42 @@
         content: "\f0f3";
         font-family: "Font Awesome 5 Brands", "Font Awesome 5 Free";
         display: block;
+        /*Para que se balancee desde el centro arriba*/
+        transform-origin: center top;
+      }
+      .notification.notify:before {
+        animation-name: bell;
+        animation-duration: 1s;
+        /*Hace que la animacion sea mas lenta*/
+        animation-timing-function: ease-out;
+      }
+      @keyframes bell {
+        from {
+          transform: rotate(35deg);
+        }
+        12.5% {
+          transform: rotate(-30deg);
+        }
+        25% {
+          transform: rotate(25deg);
+        }
+        37.5% {
+          transform: rotate(-20deg);
+        }
+        50% {
+          transform: rotate(15deg);
+        }
+        62.5% {
+          transform: rotate(-10deg);
+        }
+        75% {
+          transform: rotate(-5deg);
+        }
+        to {
+          transform: rotate(0deg);
+        }
       }
       .notification:after {
-        content: "1";
         font-size: 11px;
         font-weight: bold;
         display: flex;
@@ -55,6 +88,17 @@
         position: absolute;
         top: 5px;
         right: 5px;
+        /*Para que sea dinamico se coloca este atributo para programarlo se coloca tambien en su contenedor*/
+        content: attr(data-count);
+        transform: scale(0.5);
+        opacity: 0;
+        transition: 0.3s;
+        will-change: opacity, transform;
+      }
+      /*Cuando se tenga notificaciones esto se activa*/
+      .notification.show-count::after {
+        opacity: 1;
+        transform: scale(1);
       }
       .btn {
         text-align: center;
@@ -83,8 +127,24 @@
   </head>
   <body>
     <header class="header">
-      <button class="btn primary">Enviar notificacion</button>
-      <div class="notification"></div>
+      <button class="btn primary" id="button">Enviar notificacion</button>
+      <div class="notification" id="notification"></div>
     </header>
+    <script>
+      const $button = document.getElementById("button");
+      const $bell = document.getElementById("notification");
+      $button.addEventListener("click", (event) => {
+        /* las || quieren decir que si me da un valor indefinido o algo similar le coloque 0 como valor*/
+        const count = Number($bell.getAttribute("data-count")) || 0;
+        /*Se le asigan un valor a data-count que es la constante count declarada y que cada vez que se pulsa sume 1*/
+        $bell.setAttribute("data-count", count + 1);
+        $bell.classList.add("show-count");
+        $bell.classList.add("notify");
+      });
+      /*Se crea este arrow fucntion para quitarle la animacion de bell cuando se lance una notificacion*/
+      $bell.addEventListener("animationend", () => {
+        $bell.classList.remove("notify");
+      });
+    </script>
   </body>
 </html>
