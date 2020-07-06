@@ -145,6 +145,10 @@
       $bell.addEventListener("animationend", () => {
         $bell.classList.remove("notify");
       });
+      $bell.addEventListener("click", (event) => {
+        $bell.setAttribute("data-count", (count = 0));
+        $bell.classList.remove("show-count");
+      });
     </script>
   </body>
 </html>
